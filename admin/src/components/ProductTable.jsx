@@ -14,19 +14,19 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
     <div className="overflow-x-auto">
       <table className="w-full text-left border-collapse">
         <thead>
-          <tr className="bg-slate-50 text-slate-500 text-sm py-4 uppercase border-b border-slate-200">
-            <th className="px-6 py-4 font-medium">Product Name</th>
-            <th className="px-6 py-4 font-medium">Category</th>
-            <th className="px-6 py-4 font-medium">Price</th>
-            <th className="px-6 py-4 font-medium text-right">Actions</th>
+          <tr className="bg-[#F8FAF8] text-[#0B240B]/60 text-xs py-4 uppercase border-b border-[#0B240B]/10 tracking-widest">
+            <th className="px-6 py-5 font-bold">Nature's Bounty</th>
+            <th className="px-6 py-5 font-bold">Essence</th>
+            <th className="px-6 py-5 font-bold">Value</th>
+            <th className="px-6 py-5 font-bold text-right">Curation</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100">
           {products.map((product) => (
-            <tr key={product._id} className="hover:bg-slate-50 transition-colors">
-              <td className="px-6 py-4">
+            <tr key={product._id} className="hover:bg-[#1A3C1A]/5 transition-all group">
+              <td className="px-6 py-5">
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 rounded-lg bg-slate-100 overflow-hidden flex-shrink-0 border border-slate-200">
+                  <div className="w-14 h-14 rounded-2xl bg-white overflow-hidden flex-shrink-0 border-2 border-[#1A3C1A]/10 group-hover:border-[#D4AF37]/40 shadow-sm transition-all">
                     {product.images && product.images[0] ? (
                       <img 
                         src={product.images[0]} 
@@ -39,34 +39,36 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
                     )}
                   </div>
                   <div>
-                    <p className="font-bold text-slate-800">{product.name}</p>
-                    <p className="text-sm text-slate-500 truncate max-w-[200px]">{product.description}</p>
+                    <p className="font-bold text-[#0B240B] text-lg">{product.name}</p>
+                    <p className="text-xs text-[#0B240B]/50 truncate max-w-[200px] font-medium">{product.description}</p>
                   </div>
                 </div>
               </td>
-              <td className="px-6 py-4">
-                <span className="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-semibold">
+              <td className="px-6 py-5">
+                <span className="inline-block px-3 py-1 bg-[#1A3C1A]/10 text-[#1A3C1A] rounded-lg text-[10px] font-extrabold uppercase tracking-wide border border-[#1A3C1A]/10">
                   {product.category}
                 </span>
               </td>
-              <td className="px-6 py-4 font-bold text-slate-700">
+              <td className="px-6 py-5 font-bold text-[#0B240B] font-mono">
                 ₹{product.price.toFixed(2)}
               </td>
-              <td className="px-6 py-4 text-right">
-                <button 
-                  onClick={() => onEdit(product)}
-                  className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors mr-2"
-                  title="Edit"
-                >
-                  <Edit2 className="w-5 h-5" />
-                </button>
-                <button 
-                  onClick={() => onDelete(product._id)}
-                  className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                  title="Delete"
-                >
-                  <Trash2 className="w-5 h-5" />
-                </button>
+              <td className="px-6 py-5 text-right">
+                <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button 
+                    onClick={() => onEdit(product)}
+                    className="p-2.5 text-[#1A3C1A] bg-[#1A3C1A]/5 hover:bg-[#1A3C1A] hover:text-white rounded-xl transition-all"
+                    title="Edit Item"
+                  >
+                    <Edit2 className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={() => onDelete(product._id)}
+                    className="p-2.5 text-red-600 bg-red-50 hover:bg-red-600 hover:text-white rounded-xl transition-all"
+                    title="Remove Item"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

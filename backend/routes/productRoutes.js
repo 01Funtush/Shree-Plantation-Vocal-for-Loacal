@@ -33,12 +33,16 @@ router.post('/', auth, upload.array('imageFiles', 5), async (req, res) => {
     if (req.body.images && Array.isArray(req.body.images)) {
       images = req.body.images;
     } else if (typeof req.body.images === 'string') {
-      images = req.body.images.split(',').map(url => url.trim()).filter(url => url);
+      images = req.body.images.split('\n').map(url => url.trim()).filter(url => url);
     }
     
     // Add uploaded file URLs
     if (req.files && req.files.length > 0) {
-      const fileUrls = req.files.map(file => file.path);
+      const fileUrls = req.files.map(file => {
+        // If Cloudinary, path is full URL. If local, path is absolute system path.
+        if (file.path.startsWith('http')) return file.path;
+        return `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
+      });
       images = [...images, ...fileUrls];
     }
 
@@ -59,11 +63,14 @@ router.put('/:id', auth, upload.array('imageFiles', 5), async (req, res) => {
     if (req.body.images && Array.isArray(req.body.images)) {
       images = req.body.images;
     } else if (typeof req.body.images === 'string') {
-      images = req.body.images.split(',').map(url => url.trim()).filter(url => url);
+      images = req.body.images.split('\n').map(url => url.trim()).filter(url => url);
     }
     
     if (req.files && req.files.length > 0) {
-      const fileUrls = req.files.map(file => file.path);
+      const fileUrls = req.files.map(file => {
+        if (file.path.startsWith('http')) return file.path;
+        return `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
+      });
       images = [...images, ...fileUrls];
     }
 

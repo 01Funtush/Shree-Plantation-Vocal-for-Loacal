@@ -1,0 +1,15 @@
+{
+  "nav": {
+    "about": "About",
+    "shop": "Shop",
+    "contact": "Contact"
+  },
+  "product": {
+    "orderNow": "Order Now",
+    "bestSeller": "Best Seller",
+    "discount": "OFF"
+  },
+  "hero": {
+    "title": "Nature's Touch at Your Doorstep"
+  }
+}

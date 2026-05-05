@@ -9,6 +9,10 @@ const siteContentSchema = new mongoose.Schema({
     type: String,
     default: "Discover our wide range of Wood, Ayurved, Food, Fruit, and Flower plants, alongside our signature homemade products like authentic Achar and Papad. Cultivated with love, delivered with care."
   },
+  productsHeadline: {
+    type: String,
+    default: "Nature's Favorites"
+  },
   aboutHeadline: {
     type: String,
     default: "About Our Roots"
@@ -23,16 +27,46 @@ const siteContentSchema = new mongoose.Schema({
   },
   contactAddress: {
     type: String,
-    default: "123 Green Street, Nature Valley"
+    default: "Fulbari, Kishanganj"
   },
   contactPhone: {
     type: String,
-    default: "+1 (555) 123-4567"
+    default: "8409966393/9635329770"
   },
   contactEmail: {
     type: String,
-    default: "hello@shreeplantation.com"
-  }
+    default: "monumanish345@gmail.com"
+  },
+  ownerName: {
+    type: String,
+    default: "Monu Manish"
+  },
+  heroImage: {
+    type: String
+  },
+  heroImages: {
+    type: [String],
+    default: []
+  },
+  aboutImage1: {
+    type: String
+  },
+  aboutImages1: {
+    type: [String],
+    default: []
+  },
+  aboutImage2: {
+    type: String
+  },
+  aboutImages2: {
+    type: [String],
+    default: []
+  },
+  testimonials: [{
+    name: String,
+    message: String,
+    id: String
+  }]
 });
 
 module.exports = mongoose.model('SiteContent', siteContentSchema);

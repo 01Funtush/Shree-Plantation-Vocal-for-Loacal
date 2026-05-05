@@ -1,19 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer utilities {
   .glass-effect {
-    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-lg;
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-lg;
+  }
+  .text-shadow-premium {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+  .header-gradient {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+  }
+  .emerald-gradient {
+    background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%);
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.1), 0 4px 15px rgba(0,0,0,0.2);
+  }
+  .gold-glow {
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+  }
+  .leaf-vein-bg {
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 L50 100 M50 20 L80 10 M50 40 L20 30 M50 60 L85 55 M50 80 L15 75' stroke='white' stroke-opacity='0.05' fill='none'/%3E%3C/svg%3E");
+  }
+  .nav-link-organic {
+    @apply relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-brand-gold after:bottom-[-4px] after:left-1/2 after:-translate-x-1/2 after:transition-all after:duration-300 hover:after:w-full;
+  }
+  .search-focus-glow {
+    @apply focus:ring-4 focus:ring-brand-forest/10 focus:border-brand-forest/30 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)];
+  }
+  .paper-texture {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.5'/%3E%3C/svg%3E");
+    mix-blend-mode: soft-light;
   }
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f7fafc;
+  background: linear-gradient(135deg, #eaf7ec 0%, #fdf6ec 50%, #ffffff 100%);
+  background-attachment: fixed;
+  color: #1b4332;
+  text-rendering: optimizeLegibility;
+}
+
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+#hero, #navbar {
+  content-visibility: visible;
+}
+
+/* Improve scroll smoothness */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }

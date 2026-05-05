@@ -10,7 +10,8 @@ function App() {
 
   const login = async (username, password) => {
     try {
-      const url = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api/auth/login` : 'http://localhost:5000/api/auth/login';
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const url = `${baseUrl}/api/auth/login`;
       const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

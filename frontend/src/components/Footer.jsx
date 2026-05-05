@@ -1,5 +1,5 @@
-import React from 'react';
-import { Leaf, MapPin, Phone, Mail } from 'lucide-react';
+import React, { memo } from 'react';
+import { Leaf, MapPin, Phone, Mail, User } from 'lucide-react';
 
 const Footer = ({ content }) => {
   return (
@@ -8,9 +8,8 @@ const Footer = ({ content }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           
           <div>
-            <div className="flex items-center space-x-2 text-emerald-400 mb-6">
-              <Leaf className="w-8 h-8" />
-              <span className="font-bold text-2xl tracking-tight">Shree<span className="text-white">Plantation</span></span>
+            <div className="flex items-center mb-6">
+              <img src="/logo.png" alt="Shree Plantation" className="h-20 w-auto brightness-0 invert opacity-90" />
             </div>
             <p className="text-slate-400 leading-relaxed mb-6">
               Delivering nature's finest plants and authentic homemade delicacies directly to your doorstep.
@@ -30,17 +29,21 @@ const Footer = ({ content }) => {
           <div>
             <h3 className="text-lg font-bold mb-6 text-white uppercase tracking-wider">Contact Us</h3>
             <ul className="space-y-4">
+              <li className="flex items-center space-x-3 text-slate-300">
+                <User className="w-5 h-5 text-emerald-500" />
+                <span>{content?.ownerName || "Monu Manish"}</span>
+              </li>
               <li className="flex items-start space-x-3 text-slate-300">
                 <MapPin className="w-5 h-5 text-emerald-500 mt-0.5" />
-                <span>{content?.contactAddress || "123 Green Street, Natural Valley, IN"}</span>
+                <span>{content?.contactAddress || "Fulbari, Kishanganj"}</span>
               </li>
               <li className="flex items-center space-x-3 text-slate-300">
                 <Phone className="w-5 h-5 text-emerald-500" />
-                <span>{content?.contactPhone || "+91 98765 43210"}</span>
+                <span>{content?.contactPhone || "8409966393/9635329770"}</span>
               </li>
               <li className="flex items-center space-x-3 text-slate-300">
                 <Mail className="w-5 h-5 text-emerald-500" />
-                <span>{content?.contactEmail || "contact@shreeplantation.com"}</span>
+                <span>{content?.contactEmail || "monumanish345@gmail.com"}</span>
               </li>
             </ul>
           </div>
@@ -54,4 +57,4 @@ const Footer = ({ content }) => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

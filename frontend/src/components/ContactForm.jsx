@@ -26,15 +26,16 @@ const ContactForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('submitting');
-    
+
     try {
-      const url = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api/contact` : 'http://localhost:5000/api/contact';
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const url = `${baseUrl}/api/contact`;
       const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-      
+
       if (res.ok) {
         setStatus('success');
         setFormData({ name: '', phone: '', productName: '', message: '' });
@@ -50,21 +51,25 @@ const ContactForm = () => {
   };
 
   return (
-    <section id="contact" className="py-16 bg-brand-green/5 relative overflow-hidden">
-      <div className="absolute top-20 right-0 w-64 h-64 bg-brand-green/10 rounded-full blur-3xl -z-10"></div>
-      <div className="absolute bottom-10 left-10 w-72 h-72 bg-brand-light/10 rounded-full blur-3xl -z-10"></div>
+    <section id="contact" className="py-24 relative overflow-hidden bg-brand-sage-bg">
+      {/* Texture Overlays - Seamless from AboutFeatures */}
+      <div className="absolute inset-0 paper-texture opacity-50 pointer-events-none"></div>
       
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">Get in Touch</h2>
-          <p className="mt-4 text-gray-600">Interested in placing an order or learning more? Send us a message!</p>
+      <div className="absolute top-20 right-0 w-64 h-64 bg-brand-forest-deep/10 rounded-full blur-3xl -z-10"></div>
+      <div className="absolute bottom-10 left-10 w-72 h-72 bg-brand-terracotta/10 rounded-full blur-3xl -z-10"></div>
+
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-serif font-extrabold text-white sm:text-6xl tracking-tight drop-shadow-sm">Get in Touch</h2>
+          <div className="w-24 h-1.5 bg-brand-terracotta mx-auto mt-6 rounded-full shadow-lg"></div>
+          <p className="mt-8 text-white/90 font-medium text-xl max-w-xl mx-auto">Interested in placing an order? Send us a message and we'll get back to you!</p>
         </div>
 
-        <div className="glass-effect rounded-3xl p-8 md:p-10">
+        <div className="bg-white/95 backdrop-blur-md shadow-2xl rounded-[3rem] p-10 md:p-16 border-8 border-white/20">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                <label htmlFor="name" className="block text-sm font-bold text-brand-dark mb-2">Full Name</label>
                 <input
                   type="text"
                   id="name"
@@ -72,12 +77,12 @@ const ContactForm = () => {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-green/50 bg-white/60"
-                  placeholder="John Doe"
+                  className="w-full px-5 py-4 rounded-2xl border-2 border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-forest focus:border-brand-forest transition-all text-brand-dark font-medium placeholder-gray-400"
+                  placeholder="Deepu Thakur"
                 />
               </div>
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                <label htmlFor="phone" className="block text-sm font-bold text-brand-dark mb-2">Phone Number</label>
                 <input
                   type="tel"
                   id="phone"
@@ -85,27 +90,27 @@ const ContactForm = () => {
                   required
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-green/50 bg-white/60"
-                  placeholder="+1 (555) 000-0000"
+                  className="w-full px-5 py-4 rounded-2xl border-2 border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-forest focus:border-brand-forest transition-all text-brand-dark font-medium placeholder-gray-400"
+                  placeholder="+916201551640"
                 />
               </div>
             </div>
-            
+
             <div>
-              <label htmlFor="productName" className="block text-sm font-medium text-gray-700 mb-2">Product Interested In (Optional)</label>
+              <label htmlFor="productName" className="block text-sm font-bold text-brand-dark mb-2">Product Interested In (Optional)</label>
               <input
                 type="text"
                 id="productName"
                 name="productName"
                 value={formData.productName}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-green/50 bg-white/60"
+                className="w-full px-5 py-4 rounded-2xl border-2 border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-forest focus:border-brand-forest transition-all text-brand-dark font-medium placeholder-gray-400"
                 placeholder="e.g., Organic Lemon Achar"
               />
             </div>
-            
+
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">Your Message</label>
+              <label htmlFor="message" className="block text-sm font-bold text-brand-dark mb-2">Your Message</label>
               <textarea
                 id="message"
                 name="message"
@@ -113,15 +118,15 @@ const ContactForm = () => {
                 rows={4}
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-green/50 bg-white/60 resize-none"
-                placeholder="How can we help you?"
+                className="w-full px-5 py-4 rounded-2xl border-2 border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-forest focus:border-brand-forest transition-all resize-none text-brand-dark font-medium placeholder-gray-400"
+                placeholder="How can we help you? Apko kya chahiye btaye?"
               />
             </div>
-            
+
             <button
               type="submit"
               disabled={status === 'submitting'}
-              className="w-full py-4 bg-brand-green text-white rounded-xl font-bold flex items-center justify-center space-x-2 shadow-lg hover:bg-brand-light transition-colors disabled:opacity-70"
+              className="w-full py-4 bg-brand-forest text-white rounded-2xl font-bold flex items-center justify-center space-x-2 shadow-[0_8px_20px_rgba(7,14,7,0.2)] hover:bg-brand-forest-light hover:shadow-xl transition-all duration-300 disabled:opacity-70 hover:-translate-y-1 mt-8"
             >
               {status === 'submitting' ? (
                 <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
@@ -132,7 +137,7 @@ const ContactForm = () => {
                 </>
               )}
             </button>
-            
+
             {status === 'success' && (
               <div className="p-4 bg-green-100 text-green-700 rounded-xl text-center font-medium">
                 Message sent successfully! We'll get back to you soon.

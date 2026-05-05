@@ -1,0 +1,14 @@
+{
+  "tabs": {
+    "inventory": "মজুদ",
+    "inbox": "ইনবক্স",
+    "settings": "সেটিংস",
+    "logout": "লগ আউট"
+  },
+  "inbox": {
+    "empty": "ইনবক্স খালি"
+  },
+  "table": {
+    "addProduct": "নতুন পণ্য যোগ করুন"
+  }
+}

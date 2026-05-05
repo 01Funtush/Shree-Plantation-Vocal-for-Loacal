@@ -1,55 +1,89 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Star } from 'lucide-react';
 
-const ProductCard = ({ product, onClick }) => {
+const getImageUrl = (url) => {
+  if (!url) return '';
+  if (url.includes('drive.google.com/file/d/')) {
+    const match = url.match(/\/d\/(.*?)\//);
+    if (match && match[1]) {
+      return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+    }
+  }
+  return url;
+};
+
+const ProductCard = memo(({ product, onClick, onOrderClick, className = "" }) => {
+
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
-      <div className="relative h-64 overflow-hidden cursor-pointer" onClick={onClick}>
+    <div className={`bg-white rounded-2xl overflow-hidden mindtree-shadow transition-all duration-300 border border-gray-100 group flex flex-col hover:-translate-y-2 hover:shadow-xl ${className}`}>
+      <div className="relative h-64 overflow-hidden cursor-pointer shrink-0" onClick={onClick}>
         {product.images && product.images.length > 0 ? (
           <img 
-            src={product.images[0]} 
+            src={getImageUrl(product.images[0])}
             alt={product.name} 
+            loading="lazy"
             onError={(e) => { e.target.onerror = null; e.target.src = "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&q=80&w=400"; }}
-            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
           />
         ) : (
-          <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
+          <div className="w-full h-full bg-brand-bg flex items-center justify-center text-brand-muted">
             No Image
           </div>
         )}
-        <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md text-xs font-semibold text-brand-green shadow-sm">
-          {product.category}
+        {/* Best Seller Badge */}
+        {product.isBestSeller && (
+          <div className="absolute top-4 left-4 bg-gradient-to-r from-[#BF953F] via-[#FCF6BA] to-[#B38728] px-3 py-1.5 rounded-xl text-[10px] font-extrabold text-[#1A3C1A] shadow-xl flex items-center gap-1 z-10 border border-[#D4AF37]/50 tracking-wider">
+            NATURE'S FAVORITE
+          </div>
+        )}
+
+        {/* Rating Pill on Top Right */}
+        <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-xl text-xs font-medium text-brand-dark shadow-sm flex items-center gap-1 z-10 border border-white/50">
+          <Star className="w-3.5 h-3.5 text-brand-earth fill-current" />
+          {product.rating || "5.0"}
         </div>
       </div>
       
-      <div className="p-5">
+      <div className="p-6 flex flex-col flex-grow bg-white">
         <div className="flex justify-between items-start mb-2">
-          <h3 className="text-lg font-bold text-gray-900 truncate pr-2">{product.name}</h3>
-          <span className="font-bold text-brand-green">₹{product.price.toFixed(2)}</span>
+          <h3 className="text-xl font-sans font-extrabold text-brand-dark truncate pr-2">{product.name}</h3>
+          {product.discount > 0 && (
+            <span className="shrink-0 bg-[#E2725B]/10 text-[#E2725B] text-[10px] font-extrabold px-2 py-1 rounded-lg border border-[#E2725B]/20 tracking-wide uppercase">
+              {product.discount}% Savings
+            </span>
+          )}
         </div>
         
-        <p className="text-gray-500 text-sm line-clamp-2 mb-4 h-10">
+        <p className="text-gray-800 font-medium text-sm line-clamp-2 mb-6 leading-relaxed">
           {product.description}
         </p>
         
         <div className="flex items-center justify-between mt-auto">
-          <div className="flex items-center text-yellow-500">
-            <Star className="w-4 h-4 fill-current" />
-            <span className="ml-1 text-sm font-medium text-gray-700">{product.rating || 5.0}</span>
+          <div className="flex flex-col">
+            {product.discount > 0 ? (
+              <>
+                <span className="font-extrabold text-xl text-brand-dark">
+                  ₹{(product.price - (product.price * product.discount / 100)).toFixed(2)}
+                </span>
+                <span className="text-xs text-gray-400 line-through">₹{product.price.toFixed(2)}</span>
+              </>
+            ) : (
+              <span className="font-extrabold text-xl text-brand-dark">₹{product.price.toFixed(2)}</span>
+            )}
           </div>
           
-          <a href={`#contact`} 
-             onClick={() => {
-               // A hacky way to prefill the contact form for simplicity
-               window.sessionStorage.setItem('prefillProduct', product.name);
+          <button 
+             onClick={(e) => {
+               e.stopPropagation();
+               if (onOrderClick) onOrderClick(product);
              }}
-             className="px-4 py-2 bg-brand-light/20 text-brand-green rounded-lg text-sm font-semibold hover:bg-brand-green hover:text-white transition-colors">
+             className="px-6 py-3 bg-brand-forest text-white rounded-xl text-sm font-bold hover:bg-brand-forest-light transition-all duration-300 shadow-md hover:shadow-lg active:scale-95">
             Order Now
-          </a>
+          </button>
         </div>
       </div>
     </div>
   );
-};
+});
 
 export default ProductCard;

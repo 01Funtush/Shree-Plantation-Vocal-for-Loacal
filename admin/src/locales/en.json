@@ -1,0 +1,14 @@
+{
+  "tabs": {
+    "inventory": "Inventory",
+    "inbox": "Inbox",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "inbox": {
+    "empty": "Inbox is empty"
+  },
+  "table": {
+    "addProduct": "Add New Product"
+  }
+}

@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
-import Features from './components/Features';
-import ProductList from './components/ProductList';
-import ContactForm from './components/ContactForm';
-import Footer from './components/Footer';
+
+// Lazy load components that are not immediately visible
+const AboutFeatures = lazy(() => import('./components/AboutFeatures'));
+const ProductList = lazy(() => import('./components/ProductList'));
+const ContactForm = lazy(() => import('./components/ContactForm'));
+const Testimonials = lazy(() => import('./components/Testimonials'));
+const Footer = lazy(() => import('./components/Footer'));
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -14,7 +16,8 @@ function App() {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const url = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api/content` : 'http://localhost:5000/api/content';
+        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const url = `${baseUrl}/api/content`;
         const res = await fetch(url);
         const data = await res.json();
         setSiteContent(data);
@@ -23,19 +26,25 @@ function App() {
       }
     };
     fetchContent();
+    const interval = setInterval(fetchContent, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar onSearch={setSearchQuery} />
+      <Navbar searchQuery={searchQuery} onSearch={setSearchQuery} />
       <main className="flex-grow">
         <Hero content={siteContent} />
-        <About content={siteContent} />
-        <Features />
-        <ProductList searchQuery={searchQuery} />
-        <ContactForm />
+        <Suspense fallback={<div className="h-20" />}>
+          <ProductList content={siteContent} searchQuery={searchQuery} onCategorySelect={() => setSearchQuery('')} />
+          <AboutFeatures content={siteContent} />
+          <ContactForm />
+          <Testimonials content={siteContent} />
+        </Suspense>
       </main>
-      <Footer content={siteContent} />
+      <Suspense fallback={<div className="h-10" />}>
+        <Footer content={siteContent} />
+      </Suspense>
     </div>
   );
 }
